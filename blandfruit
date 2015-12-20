@@ -152,7 +152,7 @@ def main():
         debug = False
     if debug:
         s = socket.socket()
-        s.connect(('localhost',42002))
+        s.connect(('localhost', 42002))
     file1 = open(sys.argv[1], "r")
     contents = file1.read()
     file1.close()
