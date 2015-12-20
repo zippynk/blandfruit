@@ -17,8 +17,11 @@ $ sudo cp blandfruit /usr/bin/blandfruit
 (Must be CD'd into blandfruit's directory)
 
 Running a Program:
-$ blandfruit [FILEPATH]
-(If using Python 2, try: $ python /usr/bin/blandfruit [FILEPATH])
+$ blandfruit [FILEPATH] [OPTIONS]
+(If using Python 2, try: $ python /usr/bin/blandfruit [FILEPATH] [OPTIONS])
+
+Debug Mode:
+If the --debug flag is put after the filepath, blandfruit will connect to a server hosted locally on port 42002 (which must be running) and send the character (see below) of each command executed to that server.
 
 Commands:
 > Outputs the working space to the terminal.
