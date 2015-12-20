@@ -35,8 +35,8 @@ _ Clears the contents of the variable with the name of the first argument. Takes
 ` Converts the variable with the name of the first argument to a string. Takes 1 argument, a string.
 + Adds one to the variable with the name of the first argument. Takes 1 argument, a string. Note that the variable must be in integer format.
 - Subtracts one from the variable with the name of the first argument. Takes 1 argument, a string. Note that the variable must be in integer format.
-@ Sends the interpreter's code-reading index forward the number of characters specified in the first argument. Takes 1 argument, a number. Note that the interpreter index will start from the location of the @ character and that the character that it arrives at will be executed.
-x Sends the interpreter's code-reading index forward the number of characters specified in the second argument if the variable with the name of the first argument equals the working space, or the number of characters in the third argument if the first argument does not equal the working space. Takes 2 arguments, a string and 2 numbers. Note that the interpreter index will start from the location of the @ character and that the character that it arrives at will be executed.
+@ Sends the interpreter's code-reading index forward the number of characters specified in the first argument. Takes 1 argument, an integer. Note that the interpreter index will start from the location of the @ character and that the character that it arrives at will be executed.
+x Sends the interpreter's code-reading index forward the number of characters specified in the second argument if the variable with the name of the first argument equals the working space, or the number of characters in the third argument if the first argument does not equal the working space. Takes 2 arguments, a string and 2 integers. Note that the interpreter index will start from the location of the @ character and that the character that it arrives at will be executed.
 
 Data Types:
 String is the default data type. It is used in most cases.
