@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Blandfruit v0.0.1
+# Blandfruit v0.0.2
 # By Nathan "zippynk" Krantz-Fire: https://github.com/zippynk/blandfruit
 
 # (c) Nathan Krantz-Fire. Some rights reserved.
@@ -10,6 +10,7 @@
 # obtain one at https://mozilla.org/MPL/2.0/.
 
 import sys
+import socket
 
 variables = {}
 workingspace = ""
@@ -18,9 +19,12 @@ workingspace = ""
 def run(code):
     global variables
     global workingspace
+    global debug
     i = 0
 
     while i < len(code):
+        if debug:
+            s.sendall((code[i]+"\r\n").encode())
         if code[i] == ">":
             sys.stdout.write(workingspace)
             sys.stdout.flush()
@@ -69,7 +73,7 @@ def run(code):
             while code[i] != ".":
                 variablename += code[i]
                 i += 1
-            variables[variablename] = float(variables[variablename])
+            variables[variablename] = int(variables[variablename])
 
         elif code[i] == "`":
             variablename = ""
@@ -85,7 +89,7 @@ def run(code):
             while code[i] != ".":
                 variablename += code[i]
                 i += 1
-            variables[variablename] + variables[variablename] + 1
+            variables[variablename] += 1
 
         elif code[i] == "-":
             variablename = ""
@@ -93,7 +97,7 @@ def run(code):
             while code[i] != ".":
                 variablename += code[i]
                 i += 1
-            variables[variablename] + variables[variablename] - 1
+            variables[variablename] -= 1
 
         elif code[i] == "@":
             indexdelta = ""
@@ -138,9 +142,17 @@ def run(code):
 
 
 def main():
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2 or sys.argv[1] == "--debug":
         sys.stdout.write("Usage: blandfruit [FILEPATH]\n")
         exit(0)
+    global debug
+    if "--debug" in sys.argv:
+        debug = True
+    else:
+        debug = False
+    if debug:
+        s = socket.socket()
+        s.connect(('localhost',42002))
     file1 = open(sys.argv[1], "r")
     contents = file1.read()
     file1.close()
@@ -149,3 +161,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+else:
+    global debug
+    debug = False
