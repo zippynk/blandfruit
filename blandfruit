@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+
+# Blandfruit v0.0.1
+# By Nathan "zippynk" Krantz-Fire: https://github.com/zippynk/blandfruit
+
+# (c) Nathan Krantz-Fire. Some rights reserved.
+
+# This Source Code Form is subject to the terms of the Mozilla Public License,
+# v. 2.0. If a copy of the MPL was not distributed with this file, You can
+# obtain one at https://mozilla.org/MPL/2.0/.
+
+import sys
+
+variables = {}
+workingspace = ""
+
+
+def run(code):
+    global variables
+    global workingspace
+    i = 0
+
+    while i < len(code):
+        if code[i] == ">":
+            sys.stdout.write(workingspace)
+            sys.stdout.flush()
+
+        elif code[i] == "<":
+            workingspace += sys.stdin.read(1)
+
+        elif code[i] == "v":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            if variablename not in variables:
+                variables[variablename] = ""
+            variables[variablename] += workingspace
+
+        elif code[i] == "^":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            workingspace += variables[variablename]
+
+        elif code[i] == "*":
+            workingspace = ""
+
+        elif code[i] == "_":
+            variablename = ""
+            i += 1
+            while not code[i] == ".":
+                variablename += code[i]
+                i += 1
+            variables[variablename] = ""
+
+        elif code[i] == "\"":
+            i += 1
+            while not code[i] == ".":
+                workingspace += code[i]
+                i += 1
+
+        elif code[i] == "#":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            variables[variablename] = float(variables[variablename])
+
+        elif code[i] == "`":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            variables[variablename] = str(variables[variablename])
+
+        elif code[i] == "+":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            variables[variablename] + variables[variablename] + 1
+
+        elif code[i] == "-":
+            variablename = ""
+            i += 1
+            while code[i] != ".":
+                variablename += code[i]
+                i += 1
+            variables[variablename] + variables[variablename] - 1
+
+        elif code[i] == "@":
+            indexdelta = ""
+            movedforward = 0
+            i += 1
+            movedforward += 1
+            while code[i] != ".":
+                indexdelta += code[i]
+                movedforward += 1
+                i += 1
+            i += (int(indexdelta)-movedforward-1)
+
+        elif code[i] == "x":
+            indexdelta1 = ""
+            indexdelta2 = ""
+            movedforward = 0
+            variablename = ""
+            i += 1
+            movedforward += 1
+            while code[i] != ".":
+                variablename += code[i]
+                movedforward += 1
+                i += 1
+            i += 1
+            movedforward += 1
+            while code[i] != ".":
+                indexdelta1 += code[i]
+                movedforward += 1
+                i += 1
+            i += 1
+            movedforward += 1
+            while code[i] != ".":
+                indexdelta2 += code[i]
+                movedforward += 1
+                i += 1
+            if workingspace == variables[variablename]:
+                i += (int(indexdelta1)-movedforward-1)
+            else:
+                i += (int(indexdelta2)-movedforward-1)
+
+        i += 1
+
+
+def main():
+    if len(sys.argv) < 2:
+        sys.stdout.write("Usage: blandfruit [FILEPATH]\n")
+        exit(0)
+    file1 = open(sys.argv[1], "r")
+    contents = file1.read()
+    file1.close()
+    run(contents)
+
+
+if __name__ == "__main__":
+    main()
