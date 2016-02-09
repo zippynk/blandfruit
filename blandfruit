@@ -137,6 +137,8 @@ def run(code):
                 i += (int(indexdelta1)-movedforward-1)
             else:
                 i += (int(indexdelta2)-movedforward-1)
+        elif code[i] == ":":
+            workingspace += "."
 
         i += 1
 
